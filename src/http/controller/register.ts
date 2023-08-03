@@ -1,5 +1,5 @@
+import { InvalidCredentialsError } from './../../use-cases/errors/invalid-credentials-error';
 import { PrismaUsersRepository } from "@/repositories/prisma/prisma-users-repository"
-import { UserAlreadyExistError } from "@/use-cases/errors/user-already-exists"
 import { RegisterUseCase } from "@/use-cases/register"
 import { FastifyReply, FastifyRequest } from "fastify"
 import { z } from "zod"
@@ -26,7 +26,7 @@ export async function register(request: FastifyRequest, reply: FastifyReply){
         
 
     } catch(err) {
-        if(err instanceof UserAlreadyExistError){
+        if(err instanceof InvalidCredentialsError){
             return reply.status(409).send({message: err.message})
         }
 
